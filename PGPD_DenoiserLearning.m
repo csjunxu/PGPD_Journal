@@ -65,16 +65,16 @@ for ite = 1 : par.IteNum
         cls =   cls_idx(idx(1));
         D   =   par.D(:,:, cls);
         S    = par.S(:,cls);
-        lambdaM = repmat(par.c1*par.nSig^2./ (sqrt(S)+eps ),[1 par.nlsp]);
+        lambdaM = repmat(par.c1*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
         Y = nDCnlY(:,idx);
         X = nlX(:,idx);
         b = D'*Y;
         % soft threshold
-        alpha = sign(b).*max(abs(b)-lambdaM/2,0);
+        alpha = sign(b).*max(abs(b)-lambdaM,0);
         % add DC components and aggregation
-        Xr = bsxfun(@plus,D*alpha, DCY(idx));
+        Xr = bsxfun(@plus,D*alpha, DCY(:,idx));
         X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
-        W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2,par.nlsp);
+        W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
         % calculate the PSNR
         fprintf('Cluster %d : PSNR = %2.4f, SSIM = %2.4f\n', cls, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
     end
