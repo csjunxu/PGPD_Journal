@@ -9,12 +9,13 @@ nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
 par.c1(1) = 0.44;
 par.c1(2) = 0.85;
+par.c1(3) = 0.40;
 %%
 for delta = 0.06
     par.delta = delta;
-    for c1 = 0.35:0.02:0.45
-        par.c1(3) = c1;
-        par.testcluster = 3;
+    for c1 = 0:0.01:1
+        par.c1(4) = c1;
+        par.testcluster = 4;
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
