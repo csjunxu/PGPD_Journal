@@ -37,8 +37,8 @@ for ite = 1 : par.IteNum
     [nDCnlY,nlX,blk_arr,DCY,par] = CalNonLocal( im_out, im_gt, par);
     % Gaussian dictionary selection by MAP
     if mod(ite-1,2) == 0
-        PYZ = zeros(model.nmodels,size(DCY,2));
         nPG = size(nDCnlY,2)/par.nlsp; % number of PGs
+        PYZ = zeros(model.nmodels, nPG);
         sigma2I = par.nSig^2*eye(par.ps2);
         for i = 1:model.nmodels
             sigma = model.covs(:,:,i) + sigma2I;
