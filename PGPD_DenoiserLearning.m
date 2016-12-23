@@ -74,8 +74,10 @@ for ite = 1 %: par.IteNum
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
-        fprintf('Cluster %d:\n', cls);
-        fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
+        if j == 1
+            fprintf('Cluster %d:\n', cls);
+            fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
+        end
         b = D'*Y;
         % soft threshold
         alpha = sign(b).*max(abs(b)-lambdaM,0);
