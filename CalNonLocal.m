@@ -2,8 +2,8 @@ function       [nDCnlY,nlX,blk_arr,DC,par] = CalNonLocal( nim, cim, par)
 % record the non-local patch set and the index of each patch in
 % of seed patches in image
 nim = single(nim);
-Y   = zeros(par.ps2, par.maxrc, 'single');
-X   = zeros(par.ps2, par.maxrc, 'single');
+Y   = zeros(par.ps2, par.maxrc, 'double');
+X   = zeros(par.ps2, par.maxrc, 'double');
 k   = 0;
 for i = 1:par.ps
     for j = 1:par.ps
@@ -22,8 +22,8 @@ blk_arr   =  zeros(1, par.lenrc*par.nlsp ,'double');
 % Patch Group Means
 DC = zeros(par.ps2,par.lenrc*par.nlsp,'double');
 % non-local patch groups
-nDCnlY = zeros(par.ps2,par.lenrc*par.nlsp,'single');
-nlX = zeros(par.ps2,par.lenrc*par.nlsp,'single');
+nDCnlY = zeros(par.ps2,par.lenrc*par.nlsp,'double');
+nlX = zeros(par.ps2,par.lenrc*par.nlsp,'double');
 for  i  =  1 :par.lenr
     for  j  =  1 : par.lenc
         row = par.r(i);
@@ -45,8 +45,7 @@ for  i  =  1 :par.lenr
         blk_arr(:,(off1-1)*par.nlsp+1:off1*par.nlsp)  =  indc;
         temp = Y( : , indc );
         DC(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = repmat(mean(temp,2),[1 par.nlsp ]);
-        nDCnlX(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = temp;
+        nDCnlY(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = bsxfun(@minus,temp, DC(:,(off1-1)*par.nlsp+1:off1*par.nlsp));
         nlX(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = X( : , indc );
     end
 end
-nDCnlX = bsxfun(@minus,nDCnlX,DC);

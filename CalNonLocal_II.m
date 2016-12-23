@@ -2,7 +2,7 @@ function       [nDCnlX,blk_arr,DC,par] = CalNonLocal_II( im, par)
 im = single(im);
 % Pad noisy image to avoid Borader Issues
 Paddedim = padarray(im,[par.Win,par.Win],'symmetric','both');
-X = zeros(par.ps2, par.maxrcp, 'single');
+X = zeros(par.ps2, par.maxrcp, 'double');
 k = 0;
 for i = 1:par.ps
     for j = 1:par.ps
@@ -19,9 +19,9 @@ blk_arr   =  zeros(1, par.lenrc*par.nlsp ,'double');
 % Patch Group Means
 DC = zeros(par.ps2*par.ch,par.lenrc*par.nlsp,'double');
 % non-local patch groups
-nDCnlX = zeros(par.ps2,par.lenrc *par.nlsp,'single');
+nDCnlX = zeros(par.ps2,par.lenrc *par.nlsp,'double');
 % record the distance of compared patches to the reference patches
-Vdis_rp = zeros((2*par.Win+1)^2, par.lenrc, 'single' );
+Vdis_rp = zeros((2*par.Win+1)^2, par.lenrc, 'double' );
 % record the index of compared patches to the reference patches
 Vidx_rp = Vdis_rp;
 % Compute the Integral Image
@@ -31,7 +31,7 @@ for dy = -par.Win:par.Win
     for dx = -par.Win:par.Win
         k = k + 1;
         % initial distance matrix in each iteration
-        Mdis_rp = Inf*ones(par.lenr, par.lenc, 'single' );
+        Mdis_rp = Inf*ones(par.lenr, par.lenc, 'double' );
         % Decide shift type, tx = vx+dx; ty = vy+dy
         t = zeros(size(v));
         if dx == 0 && dy == 0
