@@ -84,8 +84,8 @@ for ite = 1 %: par.IteNum
         % calculate the PSNR
         if j <= par.testcluster
             fprintf('The ite %d value of PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
-            par.PSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
-            par.SSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
+            par.LPSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
+            par.LSSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
         end
     end
     % Reconstruction
