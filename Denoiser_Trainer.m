@@ -19,7 +19,7 @@ for delta = 0.06
             % record all the results in each iteration
             GPSNR = [];
             GSSIM = [];
-            for i = 4%1:im_num
+            for i = 1:im_num
                 par.image = i;
                 par.I = single( imread(fullfile(Original_image_dir, im_dir(i).name)) )/255;
                 S = regexp(im_dir(i).name, '\.', 'split');
