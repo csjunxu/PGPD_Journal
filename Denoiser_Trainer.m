@@ -7,12 +7,12 @@ im_num = length(im_dir);
 %%
 nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
-
+par.c1(1) = 0.44;
 %%
 for delta = 0.06
     par.delta = delta;
-    for c1 = 0.42:0.02:0.48
-        par.c1 = [par.c1 c1];
+    for c1 = 0.2:0.05:0.6
+        par.c1(2) = c1;
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
