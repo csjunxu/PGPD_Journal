@@ -20,7 +20,7 @@ Index    =   reshape(Index,par.maxr,par.maxc);
 % record the indexs of patches similar to the seed patch
 blk_arr   =  zeros(1, par.lenrc*par.nlsp ,'double');
 % Patch Group Means
-DC = zeros(par.ps2*par.ch,par.lenrc*par.nlsp,'double');
+DC = zeros(par.ps2,par.lenrc*par.nlsp,'double');
 % non-local patch groups
 nDCnlY = zeros(par.ps2,par.lenrc*par.nlsp,'single');
 nlX = zeros(par.ps2,par.lenrc*par.nlsp,'single');
