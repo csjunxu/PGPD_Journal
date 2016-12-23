@@ -8,12 +8,13 @@ im_num = length(im_dir);
 nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
 par.c1(1) = 0.44;
+par.c1(2) = 0.85;
 %%
 for delta = 0.06
     par.delta = delta;
-    for c1 = 0.78:0.02:0.88
-        par.c1(2) = c1;
-        par.testcluster = 2;
+    for c1 = 0:0.1:1
+        par.c1(3) = c1;
+        par.testcluster = 3;
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
