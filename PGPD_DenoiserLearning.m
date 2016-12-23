@@ -102,10 +102,12 @@ for ite = 1 %: par.IteNum
         end
     end
     im_out  =  im_out./im_wei;
-    %     % calculate the PSNR
-    %     PSNR =   csnr( im_out*255, par.I*255, 0, 0 );
-    %     SSIM      =  cal_ssim( im_out*255, par.I*255, 0, 0 );
-    %     fprintf('Iter %d : PSNR = %2.4f, SSIM = %2.4f\n',ite, PSNR,SSIM);
+    % calculate the PSNR and SSIM
+    GPSNR =   csnr( im_out*255, par.I*255, 0, 0 );
+    GSSIM      =  cal_ssim( im_out*255, par.I*255, 0, 0 );
+    fprintf('Iter %d : PSNR = %2.4f, SSIM = %2.4f\n',ite, GPSNR,GSSIM);
+    par.GPSNR(ite,par.image) = GPSNR;
+    par.GSSIM(ite,par.image) = GSSIM;
 end
 im_out(im_out > 1) = 1;
 im_out(im_out < 0) = 0;
