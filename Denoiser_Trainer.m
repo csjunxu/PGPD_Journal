@@ -13,7 +13,7 @@ for delta = 0.06
     par.delta = delta;
     for c1 = 0.2:0.05:0.6
         par.c1(2) = c1;
-        par.cluster = 2;
+        par.testcluster = 2;
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
@@ -38,9 +38,9 @@ for delta = 0.06
                 %                 imwrite(im_out,imname);
                 fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n',im_dir(i).name, csnr( im_out*255, par.I*255, 0, 0 ), cal_ssim( im_out*255, par.I*255, 0, 0 ) );
             end
-            fprintf('Cluster %d:\n', par.cluster);
-            PSNR = par.PSNR(par.cluster,:);
-            SSIM = par.SSIM(par.cluster,:);
+            fprintf('Cluster %d:\n', par.testcluster);
+            PSNR = par.PSNR(par.testcluster,:);
+            SSIM = par.SSIM(par.testcluster,:);
             mPSNR=mean(PSNR);
             mSSIM=mean(SSIM);
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mPSNR,mSSIM);
