@@ -90,7 +90,6 @@ for i = 1:size(Vdis_rp,2)
     blk_arr(:,(i-1)*par.nlsp+1:i*par.nlsp) = indc;
     temp = X( : , indc );
     DC(:,(i-1)*par.nlsp+1:i*par.nlsp) = repmat(mean(temp,2),[1 par.nlsp]);
-    nDCnlX(:,(i-1)*par.nlsp+1:i*par.nlsp) = temp;
+    nDCnlX(:,(i-1)*par.nlsp+1:i*par.nlsp) = temp - DC(:,(i-1)*par.nlsp+1:i*par.nlsp);
 end
-nDCnlX = bsxfun(@minus,nDCnlX,DC);
 blk_arr = par.maxr*(floor(blk_arr/par.maxrp)-par.Win) + mod(blk_arr,par.maxrp) - par.Win;
