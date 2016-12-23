@@ -59,8 +59,8 @@ for ite = 1 %: par.IteNum
         seg = [0; seq; length(cls_idx)];
     end
     % Weighted Sparse Coding
-    X_hat = zeros(par.ps2,par.maxrc,'single');
-    W = zeros(par.ps2,par.maxrc,'single');
+    X_hat = zeros(par.ps2,par.maxrc,'double');
+    W = zeros(par.ps2,par.maxrc,'double');
     for   j = 1:length(seg)-1
         idx =   s_idx(seg(j)+1:seg(j+1));
         cls =   cls_idx(idx(1));
@@ -72,9 +72,10 @@ for ite = 1 %: par.IteNum
             lambdaM = repmat(0./ (sqrt(S)+eps ),[1 size(idx,1)]);
         end
         Y = nDCnlY(:,idx);
+        nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
         fprintf('Cluster %d:\n', cls);
-        fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( Y*255, X*255, 0, 0 ), cal_ssim( Y*255, X*255, 0, 0 ));
+        fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
         b = D'*Y;
         % soft threshold
         alpha = sign(b).*max(abs(b)-lambdaM,0);
@@ -83,11 +84,11 @@ for ite = 1 %: par.IteNum
         X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
         W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
         % calculate the PSNR
-        fprintf('ite %d : PSNR = %2.4f, SSIM = %2.4f\n', cls, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
+        fprintf('ite %d : PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
     end
     % Reconstruction
-    im_out = zeros(h,w,'single');
-    im_wei = zeros(h,w,'single');
+    im_out = zeros(h,w,'double');
+    im_wei = zeros(h,w,'double');
     r = 1:par.maxr;
     c = 1:par.maxc;
     k = 0;
