@@ -87,7 +87,9 @@ for ite = 1 %: par.IteNum
         W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
         % calculate the PSNR
         if j == 1
-            fprintf('ite %d : PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
+            fprintf('The ite %d value of PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
+            par.PSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
+            par.SSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
         end
     end
     % Reconstruction
@@ -104,12 +106,10 @@ for ite = 1 %: par.IteNum
         end
     end
     im_out  =  im_out./im_wei;
-    % calculate the PSNR
-    PSNR =   csnr( im_out*255, par.I*255, 0, 0 );
-    SSIM      =  cal_ssim( im_out*255, par.I*255, 0, 0 );
-    fprintf('Iter %d : PSNR = %2.4f, SSIM = %2.4f\n',ite, PSNR,SSIM);
-    par.PSNR(ite,par.image) = PSNR;
-    par.SSIM(ite,par.image) = SSIM;
+    %     % calculate the PSNR
+    %     PSNR =   csnr( im_out*255, par.I*255, 0, 0 );
+    %     SSIM      =  cal_ssim( im_out*255, par.I*255, 0, 0 );
+    %     fprintf('Iter %d : PSNR = %2.4f, SSIM = %2.4f\n',ite, PSNR,SSIM);
 end
 im_out(im_out > 1) = 1;
 im_out(im_out < 0) = 0;
