@@ -66,11 +66,7 @@ for ite = 1 %: par.IteNum
         cls =   cls_idx(idx(1));
         D   =   par.D(:,:, cls);
         S    = par.S(:,cls);
-        if j == 1
-            lambdaM = repmat(par.c1*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
-        else
-            lambdaM = repmat(0./ (sqrt(S)+eps ),[1 size(idx,1)]);
-        end
+        lambdaM = repmat(par.c1(cls)*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);

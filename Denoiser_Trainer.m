@@ -13,6 +13,7 @@ for delta = 0.06
     par.delta = delta;
     for c1 = 0.2:0.05:0.6
         par.c1(2) = c1;
+        par.cluster = 2;
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
