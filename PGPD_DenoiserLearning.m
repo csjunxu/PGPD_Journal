@@ -38,13 +38,14 @@ for ite = 1 : par.IteNum
     % Gaussian dictionary selection by MAP
     if mod(ite-1,2) == 0
         PYZ = zeros(model.nmodels,size(DCY,2));
+        nPG = size(nDCnlY,2)/par.nlsp; % number of PGs
         sigma2I = par.nSig^2*eye(par.ps2);
         for i = 1:model.nmodels
             sigma = model.covs(:,:,i) + sigma2I;
             [R,~] = chol(sigma);
             Q = R'\nDCnlY;
             TempPYZ = - sum(log(diag(R))) - dot(Q,Q,1)/2;
-            TempPYZ = reshape(TempPYZ,[par.nlsp size(DCY,2)]);
+            TempPYZ = reshape(TempPYZ,[par.nlsp nPG]);
             PYZ(i,:) = sum(TempPYZ);
         end
         % find the most likely component for each patch group
