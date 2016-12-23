@@ -35,48 +35,29 @@ for ite = 1 : par.IteNum
     end
     % search non-local patch groups
     [nDCnlY,nlX,blk_arr,DCY,par] = CalNonLocal( im_out, im_gt, par);
+    % Gaussian dictionary selection by MAP
     if mod(ite-1,2) == 0
-        PYZ = zeros(model.nmodels,size(DCY,2)/par.nlsp);
+        nPG = size(nDCnlY,2)/par.nlsp; % number of PGs
+        PYZ = zeros(model.nmodels, nPG);
         sigma2I = par.nSig^2*eye(par.ps2);
         for i = 1:model.nmodels
             sigma = model.covs(:,:,i) + sigma2I;
             [R,~] = chol(sigma);
             Q = R'\nDCnlY;
             TempPYZ = - sum(log(diag(R))) - dot(Q,Q,1)/2;
-            TempPYZ = reshape(TempPYZ,[par.nlsp size(DCY,2)/par.nlsp]);
+            TempPYZ = reshape(TempPYZ,[par.nlsp nPG]);
             PYZ(i,:) = sum(TempPYZ);
         end
         % find the most likely component for each patch group
-        [~,dicidx] = max(PYZ);
-        dicidx = dicidx';
-        [idx,  s_idx] = sort(dicidx);
+        [~,cls_idx] = max(PYZ);
+        cls_idx=repmat(cls_idx, [par.nlsp 1]);
+        cls_idx = cls_idx(:);
+        %                 cls_idx = cls_idx';
+        [idx,  s_idx] = sort(cls_idx);
         idx2 = idx(1:end-1) - idx(2:end);
         seq = find(idx2);
-        seg = [0; seq; length(dicidx)];
+        seg = [0; seq; length(cls_idx)];
     end
-%     % Gaussian dictionary selection by MAP
-%     if mod(ite-1,2) == 0
-%         nPG = size(nDCnlY,2)/par.nlsp; % number of PGs
-%         PYZ = zeros(model.nmodels, nPG);
-%         sigma2I = par.nSig^2*eye(par.ps2);
-%         for i = 1:model.nmodels
-%             sigma = model.covs(:,:,i) + sigma2I;
-%             [R,~] = chol(sigma);
-%             Q = R'\nDCnlY;
-%             TempPYZ = - sum(log(diag(R))) - dot(Q,Q,1)/2;
-%             TempPYZ = reshape(TempPYZ,[par.nlsp nPG]);
-%             PYZ(i,:) = sum(TempPYZ);
-%         end
-%         % find the most likely component for each patch group
-%         [~,cls_idx] = max(PYZ);
-%         cls_idx=repmat(cls_idx, [par.nlsp 1]);
-%         cls_idx = cls_idx(:);
-%         %                 cls_idx = cls_idx';
-%         [idx,  s_idx] = sort(cls_idx);
-%         idx2 = idx(1:end-1) - idx(2:end);
-%         seq = find(idx2);
-%         seg = [0; seq; length(cls_idx)];
-%     end
     % Weighted Sparse Coding
     X_hat = zeros(par.ps2,par.maxrc,'single');
     W = zeros(par.ps2,par.maxrc,'single');
