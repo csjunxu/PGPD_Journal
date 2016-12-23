@@ -41,17 +41,20 @@ for c1 = 0.15
                 [im_out,par]  =  PGPD_DenoiserLearning(par,model);
                 im_out(im_out>1)=1;
                 im_out(im_out<0)=0;
-                % calculate the PSNR
-                PSNR = [PSNR  csnr( im_out*255, par.I*255, 0, 0 )];
-                SSIM =  [SSIM cal_ssim( im_out*255, par.I*255, 0, 0 )];
+%                 % calculate the PSNR
+%                 PSNR = [PSNR  csnr( im_out*255, par.I*255, 0, 0 )];
+%                 SSIM =  [SSIM cal_ssim( im_out*255, par.I*255, 0, 0 )];
                 %                 imname = sprintf('PGPD_nSig%d_%s',nSig,im_dir(i).name);
                 %                 imwrite(im_out,imname);
                 fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n',im_dir(i).name, csnr( im_out*255, par.I*255, 0, 0 ), cal_ssim( im_out*255, par.I*255, 0, 0 ) );
             end
+            fprintf('Cluster %d:\n', par.cluster);
+            PSNR = par.PSNR(par.cluster,:);
+            SSIM = par.SSIM(par.cluster,:);
             mPSNR=mean(PSNR);
             mSSIM=mean(SSIM);
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mPSNR,mSSIM);
-            name = sprintf('nSig%d_c%2.2f_delta%2.2f_eta%2.2f.mat',nSig,c1,delta,eta);
+            name = sprintf('nSig%d_20_Cluster%d_c%2.2f_delta%2.2f_eta%2.2f.mat',nSig,par.cluster,c1,delta,eta);
             save(name,'nSig','PSNR','SSIM','mPSNR','mSSIM','mT512','sT512','mT256','sT256');
         end
     end

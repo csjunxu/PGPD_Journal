@@ -76,6 +76,7 @@ for ite = 1 %: par.IteNum
         X = nlX(:,idx);
         if j == 1
             fprintf('Cluster %d:\n', cls);
+            par.cluster = cls;
             fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
         end
         b = D'*Y;
