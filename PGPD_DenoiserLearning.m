@@ -23,7 +23,7 @@ par.lenr = length(par.r);
 par.lenc = length(par.c);
 par.lenrc = par.lenr*par.lenc;
 par.ps2 = par.ps^2;
-for ite = 1 : par.IteNum
+for ite = 1 %: par.IteNum
     % iterative regularization
     im_out = im_out + par.delta*(par.nim - im_out);
     % estimation of noise variance
@@ -66,9 +66,15 @@ for ite = 1 : par.IteNum
         cls =   cls_idx(idx(1));
         D   =   par.D(:,:, cls);
         S    = par.S(:,cls);
-        lambdaM = repmat(par.c1*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
+        if j == 1
+            lambdaM = repmat(par.c1*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
+        else
+            lambdaM = repmat(0./ (sqrt(S)+eps ),[1 size(idx,1)]);
+        end
         Y = nDCnlY(:,idx);
         X = nlX(:,idx);
+        fprintf('Cluster %d:\n', cls);
+        fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
         b = D'*Y;
         % soft threshold
         alpha = sign(b).*max(abs(b)-lambdaM,0);
@@ -77,7 +83,7 @@ for ite = 1 : par.IteNum
         X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
         W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
         % calculate the PSNR
-        fprintf('Cluster %d : PSNR = %2.4f, SSIM = %2.4f\n', cls, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
+        fprintf('ite %d : PSNR = %2.4f, SSIM = %2.4f\n', cls, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
     end
     % Reconstruction
     im_out = zeros(h,w,'single');
