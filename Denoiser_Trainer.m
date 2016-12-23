@@ -45,8 +45,8 @@ for delta = 0.06
             mLSSIM=mean(LSSIM);
             mGPSNR=mean(par.GPSNR);
             mGSSIM=mean(par.GSSIM);
-            fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mPSNR,mSSIM);
-            name = sprintf('nSig%d_Cluster%d_delta%2.2f_c%2.2f_eta%2.2f.mat',nSig,par.cluster,delta,c1,eta);
+            fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR,mGSSIM);
+            name = sprintf('nSig%d_Cluster%d_delta%2.2f_c%2.2f_eta%2.2f.mat',nSig,par.testcluster,delta,c1,eta);
             save(name,'nSig','LPSNR','LSSIM','mLPSNR','mLSSIM','GPSNR','GSSIM','mGPSNR','mGSSIM');
         end
     end
