@@ -37,7 +37,7 @@ for c1 = 0.15
                 par.nim =   par.I + par.nSig*randn(size(par.I));
                 fprintf('%s :\n',im_dir(i).name);
                 fprintf('The initial value of PSNR = %2.4f, SSIM = %2.4f \n', csnr( par.nim*255, par.I*255, 0, 0 ),cal_ssim( par.nim*255, par.I*255, 0, 0 ));
-                %%
+                %%  
                 [im_out,par]  =  PGPD_DenoiserLearning(par,model);
                 im_out(im_out>1)=1;
                 im_out(im_out<0)=0;

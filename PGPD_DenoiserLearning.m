@@ -86,7 +86,9 @@ for ite = 1 %: par.IteNum
         X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
         W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
         % calculate the PSNR
-        fprintf('ite %d : PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
+        if j == 1
+            fprintf('ite %d : PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
+        end
     end
     % Reconstruction
     im_out = zeros(h,w,'double');
