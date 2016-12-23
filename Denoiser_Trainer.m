@@ -6,24 +6,13 @@ im_num = length(im_dir);
 
 %%
 nSig = 50;
-% [par, model]  =  Parameters_Setting( nSig );
-load './model/PG_GMM_8x8_win15_nlsp10_delta0.002_cls33.mat';
-par.nSig = nSig/255;
-par.step = 3;       % the step of two neighbor patches
-par.IteNum = 4;  % the iteration number
-par.ps = ps;        % patch size
-par.nlsp = nlsp;  % number of non-local patches
-par.Win = win;   % size of window around the patch
-% dictionary and regularization parameter
-for i = 1:size(GMM_D,2)
-    par.D(:,:,i) = reshape(single(GMM_D(:, i)), size(GMM_S,1), size(GMM_S,1));
-end
-par.S = single(GMM_S);
+[par, model]  =  Parameters_Setting( nSig );
+
 %%
 for delta = 0.06
     par.delta = delta;
     for c1 = 0.42:0.02:0.48
-        par.c1 = c1;
+        par.c1 = [par.c1 c1];
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
