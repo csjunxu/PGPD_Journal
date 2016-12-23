@@ -11,7 +11,7 @@ par.c1(1) = 0.44;
 %%
 for delta = 0.06
     par.delta = delta;
-    for c1 = 0:0.1:0.6
+    for c1 = 0.7:0.1:1
         par.c1(2) = c1;
         par.testcluster = 2;
         for eta = 1
@@ -19,10 +19,10 @@ for delta = 0.06
             % record all the results in each iteration
             GPSNR = [];
             GSSIM = [];
-            for i = 1:im_num
+            for i = 4%1:im_num
                 par.image = i;
                 par.I = single( imread(fullfile(Original_image_dir, im_dir(i).name)) )/255;
-                %         S = regexp(im_dir(i).name, '\.', 'split');
+                S = regexp(im_dir(i).name, '\.', 'split');
                 randn('seed',0);
                 par.nim =   par.I + par.nSig*randn(size(par.I));
                 fprintf('%s :\n',im_dir(i).name);
