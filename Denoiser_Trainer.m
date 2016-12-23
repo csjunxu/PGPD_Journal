@@ -22,7 +22,7 @@ par.S = single(GMM_S);
 %%
 for delta = 0.06
     par.delta = delta;
-    for c1 = 0.25:0.05:0.5
+    for c1 = 0.42:0.02:0.48
         par.c1 = c1;
         for eta = 1
             par.eta=eta;
