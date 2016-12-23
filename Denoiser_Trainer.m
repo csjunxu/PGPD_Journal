@@ -17,8 +17,8 @@ for delta = 0.06
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
-%             PSNR = [];
-%             SSIM = [];
+            GPSNR = [];
+            GSSIM = [];
             for i = 1:im_num
                 par.image = i;
                 par.I = single( imread(fullfile(Original_image_dir, im_dir(i).name)) )/255;
@@ -31,21 +31,25 @@ for delta = 0.06
                 [im_out,par]  =  PGPD_DenoiserLearning(par,model);
                 im_out(im_out>1)=1;
                 im_out(im_out<0)=0;
-                %                 % calculate the PSNR
-                %                 PSNR = [PSNR  csnr( im_out*255, par.I*255, 0, 0 )];
-                %                 SSIM =  [SSIM cal_ssim( im_out*255, par.I*255, 0, 0 )];
-                %                 imname = sprintf('PGPD_nSig%d_%s',nSig,im_dir(i).name);
-                %                 imwrite(im_out,imname);
+                % calculate the PSNR
+                GPSNR = [GPSNR  csnr( im_out*255, par.I*255, 0, 0 )];
+                GSSIM =  [GSSIM cal_ssim( im_out*255, par.I*255, 0, 0 )];
+                %                                 imname = sprintf('PGPD_nSig%d_%s',nSig,im_dir(i).name);
+                %                                 imwrite(im_out,imname);
                 fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n',im_dir(i).name, csnr( im_out*255, par.I*255, 0, 0 ), cal_ssim( im_out*255, par.I*255, 0, 0 ) );
             end
             fprintf('Cluster %d:\n', par.testcluster);
-            PSNR = par.PSNR(par.testcluster,:);
-            SSIM = par.SSIM(par.testcluster,:);
-            mPSNR=mean(PSNR);
-            mSSIM=mean(SSIM);
+            LPSNR = par.LPSNR(par.testcluster,:);
+            LSSIM = par.LSSIM(par.testcluster,:);
+            GPSNR = par.GPSNR(par.testcluster,:);
+            GSSIM = par.GSSIM(par.testcluster,:);
+            mLPSNR=mean(LPSNR);
+            mLSSIM=mean(LSSIM);
+            mGPSNR=mean(GPSNR);
+            mGSSIM=mean(GSSIM);
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mPSNR,mSSIM);
             name = sprintf('nSig%d_Cluster%d_delta%2.2f_c%2.2f_eta%2.2f.mat',nSig,par.cluster,delta,c1,eta);
-            save(name,'nSig','PSNR','SSIM','mPSNR','mSSIM');
+            save(name,'nSig','LPSNR','LSSIM','mLPSNR','mLSSIM','GPSNR','GSSIM','mGPSNR','mGSSIM');
         end
     end
 end
