@@ -64,21 +64,17 @@ for ite = 1 : par.IteNum
         D   =   par.D(:,:, cls);
         S    = par.S(:,cls);
         lambdaM = repmat(par.c1*par.nSig^2./ (sqrt(S)+eps ),[1 par.nlsp]);
-        for i = 1:size(idx,1)
-            Y = nDCnlY(:,(idx(i)-1)*par.nlsp+1:idx(i)*par.nlsp);
-%             X = nlX(:,(idx(i)-1)*par.nlsp+1:idx(i)*par.nlsp);
-            b = D'*Y;
-            % soft threshold
-            alpha = sign(b).*max(abs(b)-lambdaM/2,0);
-            % add DC components and aggregation
-            X_C = bsxfun(@plus,D*alpha, DCY(:,idx(i)));
-            X_hat(:,blk_arr(:,idx(i))) = X_hat(:,blk_arr(:,idx(i))) + X_C;
-            W(:,blk_arr(:,idx(i))) = W(:,blk_arr(:,idx(i))) + ones(par.ps2,par.nlsp);
-        end
-%         % calculate the PSNR
-%         PSNR =   csnr( X_C*255, par.I*255, 0, 0 );
-%         SSIM      =  cal_ssim( X_C*255, par.I*255, 0, 0 );
-%         fprintf('Iter %d : PSNR = %2.4f, SSIM = %2.4f\n',ite, PSNR,SSIM);
+        Y = nDCnlY(:,idx);
+        X = nlX(:,idx);
+        b = D'*Y;
+        % soft threshold
+        alpha = sign(b).*max(abs(b)-lambdaM/2,0);
+        % add DC components and aggregation
+        Xr = bsxfun(@plus,D*alpha, DCY(idx));
+        X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
+        W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2,par.nlsp);
+        % calculate the PSNR
+        fprintf('Cluster %d : PSNR = %2.4f, SSIM = %2.4f\n', cls, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
     end
     % Reconstruction
     im_out = zeros(h,w,'single');

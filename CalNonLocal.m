@@ -18,7 +18,7 @@ end
 Index    =   (1:par.maxrc);
 Index    =   reshape(Index,par.maxr,par.maxc);
 % record the indexs of patches similar to the seed patch
-blk_arr  =  zeros(par.nlsp, par.lenrc ,'single');
+blk_arr   =  zeros(1, par.lenrc*par.nlsp ,'double');
 % Patch Group Means
 DC = zeros(par.ps2,par.lenrc,'single');
 % non-local patch groups
@@ -42,7 +42,7 @@ for  i  =  1 :par.lenr
         dis = sum(bsxfun(@minus,neighbor, seed).^2,1);
         [~,ind] = sort(dis);
         indc = idx( ind( 1:par.nlsp ) );
-        blk_arr(:,off1) = indc;
+        blk_arr(:,(off1-1)*par.nlsp+1:off1*par.nlsp)  =  indc;
         temp = Y( : , indc );
         DC(:,off1) = mean(temp,2);
         nDCnlY(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = bsxfun(@minus,temp,DC(:,off1));
