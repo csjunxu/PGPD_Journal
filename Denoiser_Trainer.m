@@ -11,7 +11,7 @@ par.c1(1) = 0.44;
 %%
 for delta = 0.06
     par.delta = delta;
-    for c1 = 0:0.05:0.6
+    for c1 = 0:0.1:0.6
         par.c1(2) = c1;
         par.testcluster = 2;
         for eta = 1
