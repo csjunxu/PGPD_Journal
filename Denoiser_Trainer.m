@@ -22,9 +22,9 @@ par.S = single(GMM_S);
 %%
 for delta = 0.06
     par.delta = delta;
-    for c1 = 0.1:0.05:0.5
+    for c1 = 0.25:0.05:0.5
         par.c1 = c1;
-        for eta = 1:-0.02:0.9
+        for eta = 1
             par.eta=eta;
             % record all the results in each iteration
 %             PSNR = [];
