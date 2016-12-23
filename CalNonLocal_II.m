@@ -15,9 +15,9 @@ end
 Index = (1:par.maxrcp);
 Index = reshape(Index,par.maxrp,par.maxcp);
 % record the indexs of patches similar to the seed patch
-blk_arr = zeros(par.nlsp, par.lenrc  ,'single');
+blk_arr   =  zeros(1, par.lenrc*par.nlsp ,'double');
 % Patch Group Means
-DC = zeros(par.ps2,par.lenrc ,'single');
+DC = zeros(par.ps2*par.ch,par.lenrc*par.nlsp,'double');
 % non-local patch groups
 nDCnlX = zeros(par.ps2,par.lenrc *par.nlsp,'single');
 % record the distance of compared patches to the reference patches
@@ -87,9 +87,10 @@ end
 [~,Ind] = sort(Vdis_rp);
 for i = 1:size(Vdis_rp,2)
     indc = Vidx_rp( Ind( 1:par.nlsp,i ),i );
-    blk_arr(:,i) = indc;
+    blk_arr(:,(i-1)*par.nlsp+1:i*par.nlsp) = indc;
     temp = X( : , indc );
-    DC(:,i) = mean(temp,2);
-    nDCnlX(:,(i-1)*par.nlsp+1:i*par.nlsp) = bsxfun(@minus,temp,DC(:,i));
+    DC(:,(i-1)*par.nlsp+1:i*par.nlsp) = repmat(mean(temp,2),[1 par.nlsp]);
+    nDCnlX(:,(i-1)*par.nlsp+1:i*par.nlsp) = temp;
 end
+nDCnlX = bsxfun(@minus,nDCnlX,DC);
 blk_arr = par.maxr*(floor(blk_arr/par.maxrp)-par.Win) + mod(blk_arr,par.maxrp) - par.Win;
