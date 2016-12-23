@@ -48,19 +48,21 @@ for ite = 1 : par.IteNum
             PYZ(i,:) = sum(TempPYZ);
         end
         % find the most likely component for each patch group
-        [~,dicidx] = max(PYZ);
-        dicidx = dicidx';
-        [idx,  s_idx] = sort(dicidx);
+        [~,cls_idx] = max(PYZ);
+        cls_idx=repmat(cls_idx, [par.nlsp 1]);
+        cls_idx = cls_idx(:);
+        %                 cls_idx = cls_idx';
+        [idx,  s_idx] = sort(cls_idx);
         idx2 = idx(1:end-1) - idx(2:end);
         seq = find(idx2);
-        seg = [0; seq; length(dicidx)];
+        seg = [0; seq; length(cls_idx)];
     end
     % Weighted Sparse Coding
     X_hat = zeros(par.ps2,par.maxrc,'single');
     W = zeros(par.ps2,par.maxrc,'single');
     for   j = 1:length(seg)-1
         idx =   s_idx(seg(j)+1:seg(j+1));
-        cls =   dicidx(idx(1));
+        cls =   cls_idx(idx(1));
         D   =   par.D(:,:, cls);
         S    = par.S(:,cls);
         lambdaM = repmat(par.c1*par.nSig^2./ (sqrt(S)+eps ),[1 par.nlsp]);
