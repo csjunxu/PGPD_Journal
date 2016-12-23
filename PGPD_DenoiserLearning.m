@@ -70,7 +70,7 @@ for ite = 1 %: par.IteNum
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
-        if j == par.cluster
+        if j <= par.cluster
             fprintf('Cluster %d:\n', cls);
             fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
         end
@@ -82,7 +82,7 @@ for ite = 1 %: par.IteNum
         X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
         W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
         % calculate the PSNR
-        if j == par.cluster
+        if j <= par.cluster
             fprintf('The ite %d value of PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
             par.PSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
             par.SSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
