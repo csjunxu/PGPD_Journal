@@ -55,7 +55,7 @@ for c1 = 0.15
             mSSIM=mean(SSIM);
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mPSNR,mSSIM);
             name = sprintf('nSig%d_20_Cluster%d_c%2.2f_delta%2.2f_eta%2.2f.mat',nSig,par.cluster,c1,delta,eta);
-            save(name,'nSig','PSNR','SSIM','mPSNR','mSSIM','mT512','sT512','mT256','sT256');
+            save(name,'nSig','PSNR','SSIM','mPSNR','mSSIM');
         end
     end
 end
