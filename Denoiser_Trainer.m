@@ -12,11 +12,11 @@ par.c1(2) = 0.85;
 par.c1(3) = 0.40;
 par.c1(4) = 0.47;
 %%
-for delta = 0.06
-    par.delta = delta;
-    for c1 = 0:0.01:1
-        par.c1(5) = c1;
-        par.testcluster = 5;
+for c1 = 0:0.01:1
+    par.c1(5) = c1;
+    par.testcluster = 5;
+    for delta = 0.06
+        par.delta = delta;
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
