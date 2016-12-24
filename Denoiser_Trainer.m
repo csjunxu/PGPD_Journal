@@ -16,7 +16,7 @@ for delta = 0.06
     par.delta = delta;
     for c1 = 0:0.01:1
         par.c1(5) = c1;
-        par.testcluster = 4;
+        par.testcluster = 5;
         for eta = 1
             par.eta=eta;
             % record all the results in each iteration
