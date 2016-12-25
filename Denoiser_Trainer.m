@@ -7,19 +7,19 @@ im_num = length(im_dir);
 %%
 nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
-par.c1(1) = 0.44;
-par.c1(2) = 0.85;
-par.c1(3) = 0.40;
-par.c1(4) = 0.47;
-par.c1(5) = 0.46;
+par.c1(1,1) = 0.44;
+par.c1(2,1) = 0.85;
+par.c1(3,1) = 0.40;
+par.c1(4,1) = 0.47;
+par.c1(5,1) = 0.46;
 %%
 for c1 = 0:0.1:1
-    par.c1(6) = c1;
+    par.c1(6,1) = c1;
     par.testcluster = 6;
     for delta = 0.06
-        par.delta = delta;
+        par.delta(1) = delta;
         for eta = 1
-            par.eta=eta;
+            par.eta(1) = eta;
             % record all the results in each iteration
             GPSNR = [];
             GSSIM = [];
