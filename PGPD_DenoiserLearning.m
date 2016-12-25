@@ -25,13 +25,13 @@ par.lenrc = par.lenr*par.lenc;
 par.ps2 = par.ps^2;
 for ite = 1 %: par.IteNum
     % iterative regularization
-    im_out = im_out + par.delta*(par.nim - im_out);
+    im_out = im_out + par.delta(ite)*(par.nim - im_out);
     % estimation of noise variance
     if ite == 1
         par.nSig = par.nSig0;
     else
         dif = mean( mean( (par.nim - im_out).^2 ) ) ;
-        par.nSig = sqrt( abs( par.nSig0^2 - dif ) )*par.eta;
+        par.nSig = sqrt( abs( par.nSig0^2 - dif ) )*par.eta(ite);
     end
     % search non-local patch groups
     [nDCnlY,nlX,blk_arr,DCY,par] = CalNonLocal( im_out, im_gt, par);
@@ -66,7 +66,7 @@ for ite = 1 %: par.IteNum
         cls =   cls_idx(idx(1));
         D   =   par.D(:,:, cls);
         S    = par.S(:,cls);
-        lambdaM = repmat(par.c1(cls)*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
+        lambdaM = repmat(par.c1(cls,ite)*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
