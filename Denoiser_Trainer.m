@@ -7,6 +7,8 @@ im_num = length(im_dir);
 %%
 nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
+par.eta = zeros(par.IteNum,1);
+par.delta = zeros(par.IteNum,1);
 par.c1(1,1) = 0.44;
 par.c1(2,1) = 0.85;
 par.c1(3,1) = 0.40;
