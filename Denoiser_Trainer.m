@@ -15,10 +15,11 @@ par.c1(5,1) = 0.46;
 par.c1(6,1) = 0.89;
 par.c1(7,1) = 0.49;
 par.c1(8,1) = 0.75;
+par.c1(9,1) = 0.55;
 %%
-for c1 = 0.55:0.02:0.65
-    par.c1(9,1) = c1;
-    par.testcluster = 9;
+for c1 = 0.01:0.01:1
+    par.c1(10,1) = c1;
+    par.testcluster = 10;
     for delta = 0.06
         par.delta(1) = delta;
         for eta = 1
