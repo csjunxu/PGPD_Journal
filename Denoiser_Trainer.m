@@ -16,7 +16,7 @@ par.c1(6,1) = 0.89;
 par.c1(7,1) = 0.49;
 par.c1(8,1) = 0.75;
 %%
-for c1 = 0.1:0.1:1
+for c1 = 0.55:0.02:0.65
     par.c1(9,1) = c1;
     par.testcluster = 9;
     for delta = 0.06
