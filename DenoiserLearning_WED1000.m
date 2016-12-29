@@ -29,8 +29,6 @@ for testcluster = 1:1:model.nmodels
                     fprintf('The initial value of PSNR = %2.4f, SSIM = %2.4f \n', csnr( par.nim*255, par.I*255, 0, 0 ),cal_ssim( par.nim*255, par.I*255, 0, 0 ));
                     %%
                     [im_out,par]  =  PGPD_DenoiserLearning(par,model);
-                    im_out(im_out>1)=1;
-                    im_out(im_out<0)=0;
                     % calculate the PSNR
                     GPSNR = [GPSNR  csnr( im_out*255, par.I*255, 0, 0 )];
                     GSSIM =  [GSSIM cal_ssim( im_out*255, par.I*255, 0, 0 )];
