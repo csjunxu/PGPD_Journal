@@ -9,7 +9,7 @@ nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
 %%
 for testcluster = 1:1:model.nmodels
-    for c1 = 0.1:0.1:1
+    for c1 = [0.45 0.55]
         par.c1(testcluster,1) = c1;
         par.testcluster = testcluster;
         for delta = 0.06
