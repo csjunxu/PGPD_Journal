@@ -76,7 +76,7 @@ for testcluster = 1:model.nmodels
                 mGPSNR=mean(par.GPSNR);
                 mGSSIM=mean(par.GSSIM);
                 fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR,mGSSIM);
-                name = sprintf('nSig%d_2_testcluster%d_delta%2.2f_eta%2.2f_c1%2.2f.mat',nSig,testcluster,delta,eta,c1);
+                name = sprintf('nSig%d_testcluster%d_delta%2.2f_eta%2.2f_c1%2.2f_2.mat',nSig,testcluster,delta,eta,c1);
                 save(name,'nSig','LPSNR','LSSIM','mLPSNR','mLSSIM','GPSNR','GSSIM','mGPSNR','mGSSIM');
             end
         end
