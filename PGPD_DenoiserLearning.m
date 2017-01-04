@@ -52,7 +52,6 @@ for ite = 1 : 2%par.IteNum
         [~,cls_idx] = max(PYZ);
         cls_idx=repmat(cls_idx, [par.nlsp 1]);
         cls_idx = cls_idx(:);
-        %                 cls_idx = cls_idx';
         [idx,  s_idx] = sort(cls_idx);
         idx2 = idx(1:end-1) - idx(2:end);
         seq = find(idx2);
@@ -70,7 +69,7 @@ for ite = 1 : 2%par.IteNum
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
-        if j <= par.testcluster && cls<= par.testcluster
+        if j <= par.testcluster && cls<= par.testcluster && ite == 2
             fprintf('Cluster %d:\n', cls);
         end
         b = D'*Y;
