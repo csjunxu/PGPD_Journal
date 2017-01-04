@@ -41,7 +41,7 @@ par.c1(31,1) = 0.60;
 %%
 for add = 0:0.05:0.3
     par.add = add;
-    par.testcluster = testcluster;
+%     par.testcluster = testcluster;
     for delta = 0.06
         par.delta(1) = delta;
         for eta = 1
