@@ -70,10 +70,10 @@ for ite = 1 : 2%par.IteNum
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
-%         if j <= par.testcluster && cls<= par.testcluster && ite == 2
+        if j <= par.testcluster && cls<= par.testcluster && ite == 2
             fprintf('Cluster %d:\n', cls);
 %             fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
-%         end
+        end
         b = D'*Y;
         % soft threshold
         alpha = sign(b).*max(abs(b)-lambdaM,0);
