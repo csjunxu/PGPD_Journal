@@ -45,9 +45,9 @@ for testcluster = 1:model.nmodels
     for c1 = 0.2:0.2:1.4
         par.c1(testcluster, 2) = c1;
         for delta = 0.06
-            par.delta(1) = delta;
+            par.delta = delta;
             for eta = 1
-                par.eta(1) = eta;
+                par.eta = eta;
                 % record all the results in each iteration
                 GPSNR = [];
                 GSSIM = [];

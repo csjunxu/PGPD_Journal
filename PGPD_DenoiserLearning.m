@@ -25,13 +25,13 @@ par.lenrc = par.lenr*par.lenc;
 par.ps2 = par.ps^2;
 for ite = 1 : 2%par.IteNum
     % iterative regularization
-    im_out = im_out + par.delta(ite)*(par.nim - im_out);
+    im_out = im_out + par.delta*(par.nim - im_out);
     % estimation of noise variance
     if ite == 1
         par.nSig = par.nSig0;
     else
         dif = mean( mean( (par.nim - im_out).^2 ) ) ;
-        par.nSig = sqrt( abs( par.nSig0^2 - dif ) )*par.eta(ite);
+        par.nSig = sqrt( abs( par.nSig0^2 - dif ) )*par.eta;
     end
     % search non-local patch groups
     [nDCnlY,nlX,blk_arr,DCY,par] = CalNonLocal( im_out, im_gt, par);
@@ -70,10 +70,10 @@ for ite = 1 : 2%par.IteNum
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
-        if j <= par.testcluster && cls<= par.testcluster && ite == 2
-            fprintf('Cluster %d:\n', cls);
-            fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
-        end
+%         if j <= par.testcluster && cls<= par.testcluster && ite == 2
+%             fprintf('Cluster %d:\n', cls);
+%             fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
+%         end
         b = D'*Y;
         % soft threshold
         alpha = sign(b).*max(abs(b)-lambdaM,0);
