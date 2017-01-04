@@ -56,7 +56,7 @@ for testcluster = 1:model.nmodels
                     par.I = single( imread(fullfile(Original_image_dir, im_dir(i).name)) )/255;
                     S = regexp(im_dir(i).name, '\.', 'split');
                     randn('seed',0);
-                    par.nim =   par.I + par.nSig*randn(size(par.I));
+                    par.nim =   par.I + nSig/255*randn(size(par.I));
                     fprintf('%s :\n',im_dir(i).name);
                     fprintf('The initial value of PSNR = %2.4f, SSIM = %2.4f \n', csnr( par.nim*255, par.I*255, 0, 0 ),cal_ssim( par.nim*255, par.I*255, 0, 0 ));
                     %%
@@ -71,12 +71,12 @@ for testcluster = 1:model.nmodels
                 fprintf('Cluster %d:\n', par.testcluster);
                 LPSNR = par.LPSNR(par.testcluster,:);
                 LSSIM = par.LSSIM(par.testcluster,:);
-                mLPSNR=mean(LPSNR);
-                mLSSIM=mean(LSSIM);
+                mLPSNR=mean(par.LPSNR);
+                mLSSIM=mean(par.LSSIM);
                 mGPSNR=mean(par.GPSNR);
                 mGSSIM=mean(par.GSSIM);
                 fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR,mGSSIM);
-                name = sprintf('nSig%d_2_testcluster%d_delta%2.2f_eta%2.2f_c1%2.2f.mat',nSig,testcluster,add,delta,eta,c1);
+                name = sprintf('nSig%d_2_testcluster%d_delta%2.2f_eta%2.2f_c1%2.2f.mat',nSig,testcluster,delta,eta,c1);
                 save(name,'nSig','LPSNR','LSSIM','mLPSNR','mLSSIM','GPSNR','GSSIM','mGPSNR','mGSSIM');
             end
         end
