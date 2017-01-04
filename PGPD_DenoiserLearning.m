@@ -71,7 +71,7 @@ for ite = 1 : 2%par.IteNum
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
 %         if j <= par.testcluster && cls<= par.testcluster && ite == 2
-%             fprintf('Cluster %d:\n', cls);
+            fprintf('Cluster %d:\n', cls);
 %             fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
 %         end
         b = D'*Y;
