@@ -23,7 +23,7 @@ par.lenr = length(par.r);
 par.lenc = length(par.c);
 par.lenrc = par.lenr*par.lenc;
 par.ps2 = par.ps^2;
-for ite = 1 %: par.IteNum
+for ite = 1 : 2%par.IteNum
     % iterative regularization
     im_out = im_out + par.delta(ite)*(par.nim - im_out);
     % estimation of noise variance
@@ -66,14 +66,14 @@ for ite = 1 %: par.IteNum
         cls =   cls_idx(idx(1));
         D   =   par.D(:,:, cls);
         S    = par.S(:,cls);
-        lambdaM = repmat((par.c1(cls,ite)+par.add)*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
+        lambdaM = repmat(par.c1(cls,ite)*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
-%         if j <= par.testcluster && cls<= par.testcluster
-%             fprintf('Cluster %d:\n', cls);
-%             fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
-%         end
+        if j <= par.testcluster && cls<= par.testcluster
+            fprintf('Cluster %d:\n', cls);
+            fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
+        end
         b = D'*Y;
         % soft threshold
         alpha = sign(b).*max(abs(b)-lambdaM,0);
@@ -82,11 +82,11 @@ for ite = 1 %: par.IteNum
         X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
         W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
         % calculate the PSNR
-%         if j <= par.testcluster && cls<= par.testcluster
-%             fprintf('The ite %d value of PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
-%             par.LPSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
-%             par.LSSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
-%         end
+        if j <= par.testcluster && cls<= par.testcluster
+            fprintf('The ite %d value of PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
+            par.LPSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
+            par.LSSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
+        end
     end
     % Reconstruction
     im_out = zeros(h,w,'double');
