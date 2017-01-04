@@ -59,8 +59,8 @@ for ite = 1 : 2%par.IteNum
         seg = [0; seq; length(cls_idx)];
     end
     % Weighted Sparse Coding
-    X_hat = zeros(par.ps2,par.maxrc,'double');
-    W = zeros(par.ps2,par.maxrc,'double');
+    X_hat = zeros(par.ps2,par.maxrc, 'double');
+    W = zeros(par.ps2,par.maxrc, 'double');
     for   j = 1:length(seg)-1
         idx =   s_idx(seg(j)+1:seg(j+1));
         cls =   cls_idx(idx(1));
@@ -70,9 +70,8 @@ for ite = 1 : 2%par.IteNum
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
-        if j <= par.testcluster && cls<= par.testcluster && ite == 2
+        if j <= par.testcluster && cls<= par.testcluster
             fprintf('Cluster %d:\n', cls);
-%             fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
         end
         b = D'*Y;
         % soft threshold
@@ -81,12 +80,6 @@ for ite = 1 : 2%par.IteNum
         Xr = bsxfun(@plus,D*alpha, DCY(:,idx));
         X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
         W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
-        % calculate the PSNR
-%         if j <= par.testcluster && cls<= par.testcluster && ite == 2
-%             fprintf('The ite %d value of PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
-%             par.LPSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
-%             par.LSSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
-%         end
     end
     % Reconstruction
     im_out = zeros(h,w,'double');
@@ -103,8 +96,8 @@ for ite = 1 : 2%par.IteNum
     end
     im_out  =  im_out./im_wei;
     % calculate the PSNR and SSIM
-    GPSNR =   csnr( im_out*255, par.I*255, 0, 0 );
-    GSSIM      =  cal_ssim( im_out*255, par.I*255, 0, 0 );
+    GPSNR = csnr( im_out*255, par.I*255, 0, 0 );
+    GSSIM = cal_ssim( im_out*255, par.I*255, 0, 0 );
     fprintf('The Iter %d value of PSNR = %2.4f, SSIM = %2.4f\n',ite, GPSNR,GSSIM);
     par.GPSNR(ite,par.image) = GPSNR;
     par.GSSIM(ite,par.image) = GSSIM;

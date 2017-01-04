@@ -40,7 +40,7 @@ par.c1(30,1) = 0.49;
 par.c1(31,1) = 0.60;
 par.c1(:,1) =par.c1(:,1) + 0.36;
 %%
-for testcluster = 1:model.nmodels
+for testcluster = 1:1:model.nmodels
     par.testcluster = testcluster;
     for c1 = 0.2:0.2:1.4
         par.c1(testcluster, 2) = c1;
@@ -69,15 +69,11 @@ for testcluster = 1:model.nmodels
                     fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n',im_dir(i).name, csnr( im_out*255, par.I*255, 0, 0 ), cal_ssim( im_out*255, par.I*255, 0, 0 ) );
                 end
                 fprintf('Cluster %d:\n', par.testcluster);
-                LPSNR = par.LPSNR(par.testcluster,:);
-                LSSIM = par.LSSIM(par.testcluster,:);
-                mLPSNR=mean(par.LPSNR);
-                mLSSIM=mean(par.LSSIM);
                 mGPSNR=mean(par.GPSNR);
                 mGSSIM=mean(par.GSSIM);
                 fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR,mGSSIM);
                 name = sprintf('nSig%d_testcluster%d_delta%2.2f_eta%2.2f_c1%2.2f_2.mat',nSig,testcluster,delta,eta,c1);
-                save(name,'nSig','LPSNR','LSSIM','mLPSNR','mLSSIM','GPSNR','GSSIM','mGPSNR','mGSSIM');
+                save(name,'nSig','GPSNR','GSSIM','mGPSNR','mGSSIM');
             end
         end
     end
