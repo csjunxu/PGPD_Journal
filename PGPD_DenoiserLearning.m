@@ -70,10 +70,10 @@ for ite = 1 %: par.IteNum
         Y = nDCnlY(:,idx);
         nlY = Y+DCY(:,idx);
         X = nlX(:,idx);
-        if j <= par.testcluster && cls<= par.testcluster
-            fprintf('Cluster %d:\n', cls);
-            fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
-        end
+%         if j <= par.testcluster && cls<= par.testcluster
+%             fprintf('Cluster %d:\n', cls);
+%             fprintf('Initial PSNR = %2.4f, SSIM = %2.4f\n', csnr( nlY*255, X*255, 0, 0 ), cal_ssim( nlY*255, X*255, 0, 0 ));
+%         end
         b = D'*Y;
         % soft threshold
         alpha = sign(b).*max(abs(b)-lambdaM,0);
@@ -82,11 +82,11 @@ for ite = 1 %: par.IteNum
         X_hat(:,blk_arr(idx)) = X_hat(:,blk_arr(idx)) + Xr;
         W(:,blk_arr(idx)) = W(:,blk_arr(idx)) + ones(par.ps2, size(idx,1));
         % calculate the PSNR
-        if j <= par.testcluster && cls<= par.testcluster
-            fprintf('The ite %d value of PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
-            par.LPSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
-            par.LSSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
-        end
+%         if j <= par.testcluster && cls<= par.testcluster
+%             fprintf('The ite %d value of PSNR = %2.4f, SSIM = %2.4f\n', ite, csnr( Xr*255, X*255, 0, 0 ), cal_ssim( Xr*255, X*255, 0, 0 ));
+%             par.LPSNR(cls,par.image) = csnr( Xr*255, X*255, 0, 0 );
+%             par.LSSIM(cls,par.image) = cal_ssim( Xr*255, X*255, 0, 0 );
+%         end
     end
     % Reconstruction
     im_out = zeros(h,w,'double');
