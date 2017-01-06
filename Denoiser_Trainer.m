@@ -40,9 +40,9 @@ par.c1(30,1) = 0.49;
 par.c1(31,1) = 0.60;
 par.c1(:,1) =par.c1(:,1) + 0.36;
 %%
-for testcluster = 1:1:model.nmodels
+for testcluster = 2
     par.testcluster = testcluster;
-    for c1 = 0.2:0.2:1.4
+    for c1 = [0.25 0.15 0.1 0.05]
         par.c1(testcluster, 2) = c1;
         for delta = 0.06
             par.delta = delta;
