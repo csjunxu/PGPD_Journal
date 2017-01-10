@@ -23,18 +23,16 @@ par.lenr = length(par.r);
 par.lenc = length(par.c);
 par.lenrc = par.lenr*par.lenc;
 par.ps2 = par.ps^2;
-for ite = 1 : 2%par.IteNum
-    % iterative regularization
-    im_out = im_out + par.delta*(par.nim - im_out);
+for ite = 1 : par.IteNum
     % estimation of noise variance
     if ite == 1
         par.nSig = par.nSig0;
     else
         dif = mean( mean( (par.nim - im_out).^2 ) ) ;
-        par.nSig = sqrt( abs( par.nSig0^2 - dif ) )*par.eta;
+        par.nSig = sqrt( abs( par.nSig0^2 - dif ) );
     end
     % search non-local patch groups
-    [nDCnlY,nlX,blk_arr,DCY,par] = CalNonLocal( im_out, im_gt, par);
+    [nDCnlY,blk_arr,DCY,par] = CalNonLocal( im_out, im_gt, par);
     % Gaussian dictionary selection by MAP
     if mod(ite-1,2) == 0
         nPG = size(nDCnlY,2)/par.nlsp; % number of PGs
@@ -67,10 +65,8 @@ for ite = 1 : 2%par.IteNum
         S    = par.S(:,cls);
         lambdaM = repmat(par.c1(cls,ite)*par.nSig^2./ (sqrt(S)+eps ),[1 size(idx,1)]);
         Y = nDCnlY(:,idx);
-        nlY = Y+DCY(:,idx);
-        X = nlX(:,idx);
-        if j <= par.testcluster && cls<= par.testcluster && ite == 2
-            fprintf('Cluster %d:\n', cls);
+        if cls == par.testcluster && ite == par.IteNum
+            fprintf('Processing Cluster %d:\n', cls);
         end
         b = D'*Y;
         % soft threshold

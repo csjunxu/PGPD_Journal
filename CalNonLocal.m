@@ -1,4 +1,4 @@
-function       [nDCnlY,nlX,blk_arr,DC,par] = CalNonLocal( nim, cim, par)
+function       [nDCnlY,blk_arr,DC,par] = CalNonLocal( nim, cim, par)
 % record the non-local patch set and the index of each patch in
 % of seed patches in image
 nim = single(nim);
@@ -42,6 +42,8 @@ for  i  =  1 :par.lenr
         dis = sum(bsxfun(@minus,neighbor, seed).^2,1);
         [~,ind] = sort(dis);
         indc = idx( ind( 1:par.nlsp ) );
+        indc(indc==off) = indc(1); % added on 08/01/2017
+        indc(1) = off; % to make sure the first one of indc equals to off
         blk_arr(:,(off1-1)*par.nlsp+1:off1*par.nlsp)  =  indc;
         temp = Y( : , indc );
         DC(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = repmat(mean(temp,2),[1 par.nlsp ]);
@@ -49,3 +51,7 @@ for  i  =  1 :par.lenr
         nlX(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = X( : , indc );
     end
 end
+% do not do the following, otherwise the patch groups will be clustered
+% into the same (only one) group:
+% nDCnlY(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = temp;
+% nDCnlY = nDCnlY - DC;
