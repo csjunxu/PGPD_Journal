@@ -13,8 +13,8 @@ for IteNum = 2:1:4
     par.IteNum = IteNum;
     for testcluster = 1:1:model.nmodels
         par.testcluster = testcluster;
-        mGPSNR = [];
-        mGSSIM = [];
+        mGPSNR = 0;
+        mGSSIM = 0;
         for c1 = 0.01:0.01:1
             par.c1(testcluster, IteNum) = c1;
             % record all the results in each iteration
