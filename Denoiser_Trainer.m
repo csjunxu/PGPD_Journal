@@ -47,10 +47,10 @@ for IteNum = 2:1:4
             name = sprintf('nSig%d_testcluster%d_c1%2.2f.mat',nSig,testcluster,c1);
             save(name,'nSig','GPSNR','GSSIM','mGPSNR','mGSSIM','mGPSNRend','mGSSIMend');
         end
-        if abs(mGPSNR(end) - mGPSNR(end - 1)) < 1e-4 
+        if mGPSNR(end) - mGPSNR(end - 1) < 1e-4 
             name = sprintf('parc1_%d.mat',nSig);
             save(name,'par');
-            continue;
+            break;
         end
     end
 end
