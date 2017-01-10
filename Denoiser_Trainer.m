@@ -41,11 +41,13 @@ for IteNum = 2:1:4
             fprintf('Cluster %d:\n', par.testcluster);
             mGPSNR = [mGPSNR mean(par.GPSNR(IteNum,:))];
             mGSSIM = [mGSSIM mean(par.GSSIM(IteNum,:))];
+            mGPSNRend = mGPSNR(end);
+            mGSSIMend = mGSSIM(end);
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR(end), mGSSIM(end));
-            name = sprintf('nSig%d_testcluster%d_c1%2.2f_2.mat',nSig,testcluster,c1);
-            save(name,'nSig','GPSNR','GSSIM','mGPSNR','mGSSIM');
+            name = sprintf('nSig%d_testcluster%d_c1%2.2f.mat',nSig,testcluster,c1);
+            save(name,'nSig','GPSNR','GSSIM','mGPSNR','mGSSIM','mGPSNRend','mGSSIMend');
         end
-        if mGPSNR(end) <= mGPSNR(end - 1) %|| mGSSIM(end) <= mGSSIM(end - 1)
+        if mGPSNR(end) < mGPSNR(end - 1) %|| mGSSIM(end) <= mGSSIM(end - 1)
             name = sprintf('parc1_%d.mat',nSig);
             save(name,'par');
             continue;
