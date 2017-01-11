@@ -7,10 +7,10 @@ im_num = length(im_dir);
 %%
 nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
-eval(['load parc1_' num2str(nSig) '.mat']);
+% eval(['load par_c1_' num2str(nSig) '.mat']);
 %%
 index = false;
-for IteNum = 2:1:4
+for IteNum = 1:1:4
     par.IteNum = IteNum;
     testcluster = 1;
     while testcluster <= model.nmodels
@@ -22,7 +22,7 @@ for IteNum = 2:1:4
             % record all the results in each iteration
             GPSNR = [];
             GSSIM = [];
-            for i = 1%:im_num
+            for i = 1:im_num
                 par.image = i;
                 par.nSig = nSig/255;
                 par.I = single( imread(fullfile(Original_image_dir, im_dir(i).name)) )/255;
@@ -48,11 +48,12 @@ for IteNum = 2:1:4
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR(end), mGSSIM(end));
             name = sprintf('nSig%d_IteNum%d_cluster%d_c%2.2f.mat',nSig,IteNum,testcluster,c1);
             save(name,'nSig','GPSNR','GSSIM','mGPSNR','mGSSIM','mGPSNRend','mGSSIMend');
+            if abs(mGPSNR(end) - mGPSNR(end - 1)) < 1e-4
+                name = sprintf('par_c1_%d.mat',nSig);
+                save(name,'par');
+                break;
+            end
         end
-        if abs(mGPSNR(end) - mGPSNR(end - 1)) < 1e-4
-            name = sprintf('par_c1_%d.mat',nSig);
-            save(name,'par');
-            testcluster = testcluster + 1;
-        end
+        testcluster = testcluster + 1;
     end
 end
