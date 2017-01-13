@@ -17,7 +17,7 @@ for IteNum = 1:1:4
         par.testcluster = testcluster;
         mGPSNR = 0;
         mGSSIM = 0;
-        for c1 = 0.01:0.01:1
+        for c1 = 0:0.02:1
             par.c1(testcluster, IteNum) = c1;
             % record all the results in each iteration
             GPSNR = [];
@@ -41,14 +41,14 @@ for IteNum = 1:1:4
                 fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n',im_dir(i).name, csnr( im_out*255, par.I*255, 0, 0 ), cal_ssim( im_out*255, par.I*255, 0, 0 ) );
             end
             fprintf('Cluster %d:\n', par.testcluster);
-            mGPSNR = [mGPSNR mean(par.GPSNR(IteNum,:))];
-            mGSSIM = [mGSSIM mean(par.GSSIM(IteNum,:))];
+            mGPSNR = [mGPSNR mean(GPSNR)];
+            mGSSIM = [mGSSIM mean(GSSIM)];
             mGPSNRend = mGPSNR(end);
             mGSSIMend = mGSSIM(end);
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR(end), mGSSIM(end));
             name = sprintf('nSig%d_IteNum%d_cluster%d_c%2.2f.mat',nSig,IteNum,testcluster,c1);
             save(name,'nSig','GPSNR','GSSIM','mGPSNR','mGSSIM','mGPSNRend','mGSSIMend');
-            if abs(mGPSNR(end) - mGPSNR(end - 1)) < 1e-4
+            if mGPSNR(end) < mGPSNR(end - 1)
                 name = sprintf('par_c1_%d.mat',nSig);
                 save(name,'par');
                 break;

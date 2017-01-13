@@ -17,7 +17,7 @@ for IteNum = 1:1:4
         par.testcluster = testcluster;
         mGPSNR = 0;
         mGSSIM = 0;
-        for c1 = 0.01:0.01:1
+        for c1 = 0:0.02:1
             par.c1(testcluster, IteNum) = c1;
             % record all the results in each iteration
             GPSNR = [];
