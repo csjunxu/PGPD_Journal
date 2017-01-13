@@ -41,8 +41,8 @@ for IteNum = 1:1:4
                 fprintf('%s : PSNR = %2.4f, SSIM = %2.4f \n',im_dir(i).name, csnr( im_out*255, par.I*255, 0, 0 ), cal_ssim( im_out*255, par.I*255, 0, 0 ) );
             end
             fprintf('Cluster %d:\n', par.testcluster);
-            mGPSNR = [mGPSNR mean(par.GPSNR(IteNum,:))];
-            mGSSIM = [mGSSIM mean(par.GSSIM(IteNum,:))];
+            mGPSNR = [mGPSNR mean(GPSNR)];
+            mGSSIM = [mGSSIM mean(GSSIM)];
             mGPSNRend = mGPSNR(end);
             mGSSIMend = mGSSIM(end);
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR(end), mGSSIM(end));
