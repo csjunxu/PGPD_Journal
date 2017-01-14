@@ -9,7 +9,6 @@ nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
 % eval(['load par_c1_' num2str(nSig) '.mat']);
 %%
-index = false;
 for IteNum = 1:1:4
     par.IteNum = IteNum;
     testcluster = 1;
@@ -17,7 +16,10 @@ for IteNum = 1:1:4
         par.testcluster = testcluster;
         mGPSNR = 0;
         mGSSIM = 0;
-        for c1 = 0:0.02:1
+        c1 = 0;
+        index = false;
+        while ~index
+            c1 = c1 + 0.02;
             par.c1(testcluster, IteNum) = c1;
             % record all the results in each iteration
             GPSNR = [];
@@ -48,9 +50,11 @@ for IteNum = 1:1:4
             fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR(end), mGSSIM(end));
             name = sprintf('nSig%d_IteNum%d_cluster%d_c%2.2f.mat',nSig,IteNum,testcluster,c1);
             save(name,'nSig','GPSNR','GSSIM','mGPSNR','mGSSIM','mGPSNRend','mGSSIMend');
-            if mGPSNR(end) < mGPSNR(end - 1)
-                name = sprintf('par_c1_%d.mat',nSig);
-                save(name,'par');
+            if abs(mGPSNR(end) - mGPSNR(end - 1))< 1e-5
+                name = sprintf('param_c1_%d.mat',nSig);
+                param_c1 = par.c1;
+                save(name,'param_c1');
+                index = true;
                 break;
             end
         end
