@@ -23,11 +23,11 @@ for IteNum = 1:1:4
         if sum(resultexist)
             pos = find(resultexist==1);
             eval(['load ' par.TD '/' resultlist{pos(end)}]);
-            if abs(mGPSNR(end) - mGPSNR(end))< 1e-5
+            if abs(mGPSNR(end) - mGPSNR(end-1))< 1e-5
                 testcluster = testcluster + 1;
                 continue;
             else
-                S = regexp(resultlist{pos}, '_', 'split');
+                S = regexp(resultlist{pos(end)}, '_', 'split');
                 c1 = str2double(S{end}(2:5));
                 Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, cstep, mGPSNR, mGSSIM);
             end

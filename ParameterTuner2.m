@@ -18,7 +18,7 @@ for IteNum = 1:1:4
     par.IteNum = IteNum;
     testcluster = 1;
     while testcluster <= model.nmodels
-        resultname = sprintf('nSig%d_IteNum%d_cluster%d_', nSig, IteNum, testcluster);
+        resultname = sprintf('100_nSig%d_IteNum%d_cluster%d_', nSig, IteNum, testcluster);
         resultexist = regexp(resultlist, resultname);
         resultexist = ~cellfun('isempty', resultexist);
         if sum(resultexist)
@@ -28,7 +28,7 @@ for IteNum = 1:1:4
                 testcluster = testcluster + 1;
                 continue;
             else
-                S = regexp(resultlist{pos}, '_', 'split');
+                S = regexp(resultlist{pos(end)}, '_', 'split');
                 c1 = str2double(S{end}(2:5));
                 Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, cstep, mGPSNR, mGSSIM);
             end
