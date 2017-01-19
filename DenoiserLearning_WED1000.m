@@ -8,7 +8,6 @@ im_num = min(100, length(im_dir));
 nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
 %%
-index = false;
 for IteNum = 1:1:4
     par.IteNum = IteNum;
     testcluster = 1;
@@ -21,6 +20,11 @@ for IteNum = 1:1:4
         index = false;
         while ~index
             c1 = c1 + 0.05;
+            name = sprintf('WED1000_nSig%d_IteNum%d_cluster%d_c%2.2f.mat',nSig,IteNum,testcluster,c1);
+            while exist(name, 'file')==2
+                c1 = c1 + 0.05;
+                name = sprintf('WED1000_nSig%d_IteNum%d_cluster%d_c%2.2f.mat',nSig,IteNum,testcluster,c1);
+            end
             par.c1(testcluster, IteNum) = c1;
             % record all the results in each iteration
             GPSNR = [];
