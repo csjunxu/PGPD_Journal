@@ -29,13 +29,13 @@ for IteNum = 1:1:4
             else
                 S = regexp(resultlist{pos}, '_', 'split');
                 c1 = str2double(S{end}(2:5));
-                Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, mGPSNR, mGSSIM);
+                Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, cstep, mGPSNR, mGSSIM);
             end
         else
             mGPSNR = 0;
             mGSSIM = 0;
             c1 = 0;
-            Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, mGPSNR, mGSSIM);
+            Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, cstep, mGPSNR, mGSSIM);
         end
         testcluster = testcluster + 1;
     end

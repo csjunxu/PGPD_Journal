@@ -1,4 +1,4 @@
-function [GPSNR, GSSIM] = Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, cstep, mGPSNR, mGSSIM)
+function Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, cstep, mGPSNR, mGSSIM)
 
 im_dir  = dir(par.fpath);
 im_num = length(im_dir);
