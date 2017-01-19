@@ -22,8 +22,8 @@ for IteNum = 1:1:4
         resultexist = ~cellfun('isempty', resultexist);
         if sum(resultexist)
             pos = find(resultexist==1);
-            eval(['load ' par.TD '/' resultlist{pos}]);
-            if abs(mGPSNR(end) - mGPSNR(end - 1))< 1e-5
+            eval(['load ' par.TD '/' resultlist{pos(end)}]);
+            if abs(mGPSNR(end) - mGPSNR(end))< 1e-5
                 testcluster = testcluster + 1;
                 continue;
             else

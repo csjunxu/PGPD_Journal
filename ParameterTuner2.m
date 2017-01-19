@@ -3,7 +3,7 @@ Original_image_dir  =    'C:/Users/csjunxu/Desktop/Projects/4000images/';
 fpath = fullfile(Original_image_dir, '*.png');
 TD = regexp(Original_image_dir, '/', 'split');
 %%
-nSig = 50; 
+nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
 par.Original_image_dir = Original_image_dir;
 par.fpath = fpath;
@@ -23,7 +23,7 @@ for IteNum = 1:1:4
         resultexist = ~cellfun('isempty', resultexist);
         if sum(resultexist)
             pos = find(resultexist==1);
-            eval(['load ' par.TD '/' resultlist{pos}]);
+            eval(['load ' par.TD '/' resultlist{pos(end)}]);
             if abs(mGPSNR(end) - mGPSNR(end - 1))< 1e-5
                 testcluster = testcluster + 1;
                 continue;
