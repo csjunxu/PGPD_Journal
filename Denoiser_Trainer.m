@@ -1,7 +1,7 @@
 function Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, cstep, mGPSNR, mGSSIM)
 
 im_dir  = dir(par.fpath);
-im_num = length(im_dir);
+im_num = min(length(im_dir), 100);
 
 eval(['load ' par.TD '_param_c1_' num2str(nSig) '.mat']);
 par.c1 = param_c1;
