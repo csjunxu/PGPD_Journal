@@ -7,7 +7,6 @@ im_num = min(100, length(im_dir));
 %%
 nSig = 50;
 [par, model]  =  Parameters_Setting( nSig );
-% eval(['load WED1000_par_c1_' num2str(nSig) '.mat']);
 %%
 index = false;
 for IteNum = 1:1:4
@@ -17,10 +16,11 @@ for IteNum = 1:1:4
         par.testcluster = testcluster;
         mGPSNR = 0;
         mGSSIM = 0;
-        c1 = 0;
+        eval(['load param_c1_' num2str(nSig) '.mat']);
+        c1 = max(0, param_c1(testcluster, IteNum) - 0.2);
         index = false;
         while ~index
-            c1 = c1 + 0.02;
+            c1 = c1 + 0.05;
             par.c1(testcluster, IteNum) = c1;
             % record all the results in each iteration
             GPSNR = [];
@@ -52,9 +52,9 @@ for IteNum = 1:1:4
             name = sprintf('WED1000_nSig%d_IteNum%d_cluster%d_c%2.2f.mat',nSig,IteNum,testcluster,c1);
             save(name,'nSig','GPSNR','GSSIM','mGPSNR','mGSSIM','mGPSNRend','mGSSIMend');
             if abs(mGPSNR(end) - mGPSNR(end - 1))< 1e-5
-                name = sprintf('param_c1_%d.mat',nSig);
+                name = sprintf('WED1000_c1_%d.mat', nSig);
                 param_c1 = par.c1;
-                save(name,'param_c1');
+                save(name, 'param_c1');
                 index = true;
                 break;
             end
