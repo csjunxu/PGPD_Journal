@@ -9,7 +9,7 @@ par.Original_image_dir = Original_image_dir;
 par.fpath = fpath;
 par.TD = TD{end-1};
 %%
-resultpath = dir('results/*.mat');
+resultpath = dir([par.TD '/*.mat']);
 resultlist={resultpath.name}';
 %%
 for IteNum = 1:1:4
@@ -21,7 +21,7 @@ for IteNum = 1:1:4
         resultexist = ~cellfun('isempty', resultexist);
         if sum(resultexist)
             pos = find(resultexist==1);
-            eval(['load results/' resultlist{pos}]);
+            eval(['load ' par.TD '/' resultlist{pos}]);
             if abs(mGPSNR(end) - mGPSNR(end - 1))< 1e-5
                 testcluster = testcluster + 1;
                 continue;

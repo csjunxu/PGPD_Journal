@@ -3,7 +3,7 @@ function [GPSNR, GSSIM] = Denoiser_Trainer(model, par, nSig, IteNum, testcluster
 im_dir  = dir(par.fpath);
 im_num = length(im_dir);
 
-eval(['load param_c1_' num2str(nSig) '.mat']);
+eval(['load ' par.TD '_param_c1_' num2str(nSig) '.mat']);
 par.c1 = param_c1;
 par.testcluster = testcluster;
 
@@ -39,7 +39,7 @@ while ~index
     mGPSNRend = mGPSNR(end);
     mGSSIMend = mGSSIM(end);
     fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR(end), mGSSIM(end));
-    name = sprintf('results/%s_nSig%d_IteNum%d_cluster%d_c%2.2f.mat',par.TD, nSig, IteNum, testcluster, c1);
+    name = sprintf('%s/%d_nSig%d_IteNum%d_cluster%d_c%2.2f.mat', par.TD, im_num, nSig, IteNum, testcluster, c1);
     save(name, 'nSig', 'GPSNR', 'GSSIM', 'mGPSNR', 'mGSSIM', 'mGPSNRend', 'mGSSIMend');
     if abs(mGPSNR(end) - mGPSNR(end - 1))< 1e-5
         name = sprintf('%s_param_c1_%d.mat', par.TD, nSig);
