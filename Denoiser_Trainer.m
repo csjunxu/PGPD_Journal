@@ -1,4 +1,4 @@
-function [GPSNR, GSSIM] = Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, mGPSNR, mGSSIM)
+function [GPSNR, GSSIM] = Denoiser_Trainer(model, par, nSig, IteNum, testcluster, c1, cstep, mGPSNR, mGSSIM)
 
 im_dir  = dir(par.fpath);
 im_num = length(im_dir);
@@ -9,7 +9,7 @@ par.testcluster = testcluster;
 
 index = false;
 while ~index
-    c1 = c1 + 0.02;
+    c1 = c1 + cstep;
     par.c1(testcluster, IteNum) = c1;
     fprintf('IteNum = %d, testcluster = %d, c1 = %2.2f. \n', IteNum, testcluster, c1);
     % record all the results in each iteration
