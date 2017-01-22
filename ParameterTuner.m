@@ -23,7 +23,7 @@ for IteNum = 1:1:4
         if sum(resultexist)
             pos = find(resultexist==1);
             eval(['load ' par.TD '/' resultlist{pos(end)}]);
-            if abs(mGPSNR(end) - mGPSNR(end-1))< 1e-5
+            if mGPSNR(end) <= mGPSNR(end-1)
                 testcluster = testcluster + 1;
                 continue;
             else
