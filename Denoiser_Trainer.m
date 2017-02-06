@@ -41,7 +41,7 @@ while ~index
     fprintf('The average PSNR = %2.4f, SSIM = %2.4f. \n', mGPSNR(end), mGSSIM(end));
     name = sprintf('%s/%d_nSig%d_IteNum%d_cluster%d_c%2.2f.mat', par.TD, im_num, nSig, IteNum, testcluster, c1);
     save(name, 'nSig', 'GPSNR', 'GSSIM', 'mGPSNR', 'mGSSIM', 'mGPSNRend', 'mGSSIMend');
-    if abs(mGPSNR(end) - mGPSNR(end - 1))< 1e-5
+    if abs(mGPSNR(end) - mGPSNR(end - 1)) < 1e-3
         name = sprintf('%s_param_c1_%d.mat', par.TD, nSig);
         param_c1 = par.c1;
         save(name, 'param_c1');

@@ -22,7 +22,7 @@ par.lenr = length(par.r);
 par.lenc = length(par.c);
 par.lenrc = par.lenr*par.lenc;
 par.ps2 = par.ps^2;
-for ite = 1 : par.IteNum
+for ite = 1% : par.IteNum
     % iterative regularization
     im_out = im_out + par.delta*(par.nim - im_out);
     % estimation of noise variance
@@ -88,9 +88,11 @@ for ite = 1 : par.IteNum
     end
     im_out  =  im_out./im_wei;
     % calculate the PSNR and SSIM
-    PSNR =   csnr( im_out*255, par.I*255, 0, 0 );
-    SSIM      =  cal_ssim( im_out*255, par.I*255, 0, 0 );
-    fprintf('Iter %d : PSNR = %2.4f, SSIM = %2.4f\n',ite, PSNR,SSIM);
+    GPSNR =   csnr( im_out*255, par.I*255, 0, 0 );
+    GSSIM      =  cal_ssim( im_out*255, par.I*255, 0, 0 );
+    fprintf('Iter %d : PSNR = %2.4f, SSIM = %2.4f\n',ite, GPSNR,GSSIM);
+        par.GPSNR(ite,par.image) = GPSNR;
+    par.GSSIM(ite,par.image) = GSSIM;
 end
 im_out(im_out > 1) = 1;
 im_out(im_out < 0) = 0;
