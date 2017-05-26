@@ -42,7 +42,7 @@ else
 end
 par.ps = ps;        % patch size
 par.nlsp = nlsp;  % number of non-local patches
-par.Win = win;   % size of window around the patch
+par.win = win;   % size of window around the patch
 % dictionary and regularization parameter
 for i = 1:size(GMM_D,2)
     par.D(:,:,i) = reshape(single(GMM_D(:, i)), size(GMM_S,1), size(GMM_S,1));
