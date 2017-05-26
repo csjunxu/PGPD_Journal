@@ -16,11 +16,13 @@ end
 Index    =   (1:par.maxrc);
 Index    =   reshape(Index,par.maxr,par.maxc);
 % record the indexs of patches similar to the seed patch
-blk_arr  =  zeros(par.nlsp, par.lenrc ,'double');
+blk_arr  =  zeros(1, par.lenrc*par.nlsp ,'double');
 % Patch Group Means
-DC = zeros(par.ps2ch,par.lenrc,'double');
+DC = zeros(par.ps2ch,par.lenrc*par.nlsp,'double');
 % non-local patch groups
-nDCnlX = zeros(par.ps2ch,par.lenrc*par.nlsp,'double');
+nlX = zeros(par.ps2ch,par.lenrc*par.nlsp,'double');
+% % non-local patch groups without DC 
+% nDCnlX = zeros(par.ps2ch,par.lenrc*par.nlsp,'double');
 % for  i  =  1 :par.lenr
 for  j  =  1 : par.lenc
     for  i  =  1 :par.lenr
@@ -40,11 +42,11 @@ for  j  =  1 : par.lenc
         dis = sum(bsxfun(@minus,neighbor, seed).^2,1);
         [~,ind] = sort(dis);
         indc = idx( ind( 1:par.nlsp ) );
-        indc(indc==off) = indc(1); % added on 08/01/2017
-        indc(1) = off; % to make sure the first one of indc equals to off
-        blk_arr(:,off1) = indc;
-        temp = X( : , indc );
-        DC(:,off1) = mean(temp,2);
-        nDCnlX(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = bsxfun(@minus,temp,DC(:,off1));
+        %         indc(indc==off) = indc(1); % added on 08/01/2017
+        %         indc(1) = off; % to make sure the first one of indc equals to off
+        blk_arr((off1-1)*par.nlsp+1:off1*par.nlsp) = indc;
+        nlX(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = X( : , indc );
+        DC(:,(off1-1)*par.nlsp+1:off1*par.nlsp) = repmat(mean(nlX(:,(off1-1)*par.nlsp+1:off1*par.nlsp),2), [1, par.nlsp]);
     end
 end
+nDCnlX = nlX - DC;
