@@ -18,7 +18,7 @@ Par.ch = ch;
 Par = SearchNeighborIndex( Par );
 % NY = Image2PatchNew( Par.nim, Par );
 [nDCnlY, ~, ~, Par] = CalNonLocal( Par.nim, Par);
-for ite = 1 : par.IteNum
+for ite = 1 : Par.IteNum
     % iterative regularization
     im_out = im_out + Par.delta*(Par.nim - im_out);
     %     Y = Image2PatchNew( im_out, Par );
