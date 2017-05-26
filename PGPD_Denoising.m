@@ -25,7 +25,7 @@ for ite = 1 : Par.IteNum
     
     % search non-local patch groups
     [nDCnlX,blk_arr,DC,Par] = CalNonLocal( im_out, Par);
-    SigmaCol = Par.lambda2 * sqrt(abs(repmat(Par.nSig^2, 1, size(nDCnlX,2)) - mean((nDCnlY - nDCnlX).^2))); %Estimated Local Noise Level
+    SigmaCol = Par.eta * sqrt(abs(repmat(Par.nSig^2, 1, size(nDCnlX,2)) - mean((nDCnlY - nDCnlX).^2))); %Estimated Local Noise Level
     if ite == 1
         SigmaCol = Par.nSig * ones(size(SigmaCol));
     end
