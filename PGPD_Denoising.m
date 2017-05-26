@@ -22,7 +22,6 @@ for ite = 1 : Par.IteNum
     % iterative regularization
     im_out = im_out + Par.delta*(Par.nim - im_out);
     %     Y = Image2PatchNew( im_out, Par );
-    
     % search non-local patch groups
     [nDCnlX,blk_arr,DC,Par] = CalNonLocal( im_out, Par);
     SigmaCol = Par.eta * sqrt(abs(repmat(Par.nSig^2, 1, size(nDCnlX,2)) - mean((nDCnlY - nDCnlX).^2))); %Estimated Local Noise Level
@@ -57,12 +56,13 @@ for ite = 1 : Par.IteNum
         cls =   dicidx(idx(1));
         D   =   Par.D(:,:, cls);
         S    = Par.S(:,cls);
-        lambdaM = bsxfun( @rdivide, Par.c1*SigmaCol(index).^2, sqrt(S) + eps );
         for i = 1:size(idx,1)
-            Y = nDCnlX(:,(idx(i)-1)*Par.nlsp+1:idx(i)*Par.nlsp);
+            index = (idx(i)-1)*Par.nlsp+1:idx(i)*Par.nlsp;
+            lambdaM = bsxfun( @rdivide, Par.c1*SigmaCol(index).^2, sqrt(S) + eps );
+            Y = nDCnlX(:, index);
             b = D'*Y;
             % soft threshold
-%             alpha = solve_Lp ( b, lambdaM/2, Par.p );
+            %             alpha = solve_Lp ( b, lambdaM/2, Par.p );
             alpha = sign(b).*max(abs(b)-lambdaM/2,0);
             % add DC components and aggregation
             X_hat(:,blk_arr(:,idx(i))) = X_hat(:,blk_arr(:,idx(i)))+bsxfun(@plus,D*alpha, DC(:,idx(i)));

@@ -26,9 +26,9 @@ elseif nSig<=40
     par.eta=0.98;
 elseif nSig<=50
     load './model/PG_GMM_8x8_win15_nlsp10_delta0.002_cls33.mat';
-    par.c1 = zeros(cls_num, par.IteNum);
-    par.eta = zeros(par.IteNum,1);
-    par.delta = zeros(par.IteNum,1);
+    par.c1 = 0.12*2*sqrt(2);
+    par.delta = 0.06;
+    par.eta=1.05;
 elseif nSig<=75
     load './model/PG_GMM_9x9_win15_nlsp10_delta0.002_cls33.mat';
     par.c1 = 0.09*2*sqrt(2);
